@@ -1,0 +1,51 @@
+GET http://localhost:8080/coordis/lowest-category
+###
+
+GET http://localhost:8080/coordis/lowest-brand
+###
+
+GET http://localhost:8080/coordis/category-min-max?categoryName=상의
+###
+
+POST http://localhost:8080/coordis
+Content-Type: application/json
+
+{
+  "mode": "추가",
+  "brand": "Z",
+  "prices": [
+    {"카테고리" : "상의", "가격" : "10,100"},
+    {"카테고리" : "아우터", "가격" : "5,100"},
+    {"카테고리" : "바지", "가격" : "3,000"},
+    {"카테고리" : "스니커즈", "가격" : "9,500"},
+    {"카테고리" : "가방", "가격" : "2,500"},
+    {"카테고리" : "모자", "가격" : "1,500"},
+    {"카테고리" : "양말", "가격" : "2,400"},
+    {"카테고리" : "액세서리", "가격" : "2,000"}
+  ]
+}
+###
+
+POST http://localhost:8080/coordis
+Content-Type: application/json
+
+{
+  "mode": "수정",
+  "brand": "Z",
+  "prices": [
+    {"카테고리" : "상의", "가격" : "20,100"},
+    {"카테고리" : "액세서리", "가격" : "3,000"}
+  ]
+}
+###
+
+POST http://localhost:8080/coordis
+Content-Type: application/json
+
+{
+  "mode": "삭제",
+  "brand": "Z",
+  "prices": [
+  ]
+}
+###
