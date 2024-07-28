@@ -1,6 +1,7 @@
 package com.musinsa.coordi.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.musinsa.coordi.domain.Coordi;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,15 @@ import lombok.Setter;
 import java.util.List;
 
 public class CoordiDto {
+
+    @Getter
+    @Setter
+    public static class LowestCategoryDto {
+        @JsonProperty(value = "상품")
+        private List<Coordi> products;
+        @JsonProperty(value = "총액")
+        private Integer totalPrice;
+    }
 
     @Getter
     @Setter

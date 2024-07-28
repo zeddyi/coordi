@@ -1,15 +1,12 @@
 package com.musinsa.coordi.controller;
 
 import com.musinsa.coordi.domain.Category;
-import com.musinsa.coordi.domain.Coordi;
 import com.musinsa.coordi.service.CoordiDto;
 import com.musinsa.coordi.service.CoordiService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +15,7 @@ public class CoordiController {
     private final CoordiService coordiService;
 
     @GetMapping("/coordis/lowest-category")
-    public List<Coordi> getLowestEachCategories() {
+    public CoordiDto.LowestCategoryDto getLowestEachCategories() {
         return coordiService.getLowestEachCategories();
     }
 

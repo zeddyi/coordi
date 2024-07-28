@@ -25,7 +25,7 @@ public class CoordiService {
 
     private final CoordiRepository coordiRepository;
 
-    public List<Coordi> getLowestEachCategories() {
+    public CoordiDto.LowestCategoryDto getLowestEachCategories() {
         List<Coordi> coordis = new ArrayList<>();
 
         for (Category category : Category.values()) {
@@ -36,7 +36,15 @@ public class CoordiService {
             coordis.add(coordi.get());
         }
 
-        return coordis;
+        CoordiDto.LowestCategoryDto dto = new CoordiDto.LowestCategoryDto();
+        Integer totalPrice = coordis.stream()
+                .mapToInt(Coordi::getPrice)
+                .sum();
+
+        dto.setProducts(coordis);
+        dto.setTotalPrice(totalPrice);
+
+        return dto;
     }
 
     public CoordiDto.LowestBrandDto getLowestBrand() {

@@ -44,8 +44,11 @@ class CoordiControllerTest {
                 .category(Category.PANTS)
                 .price(10_000)
                 .build();
+        CoordiDto.LowestCategoryDto dto = new CoordiDto.LowestCategoryDto();
+        dto.setProducts(List.of(coordi1, coordi2));
+        dto.setTotalPrice(coordi1.getPrice() + coordi2.getPrice());
         given(coordiService.getLowestEachCategories())
-                .willReturn(List.of(coordi1, coordi2));
+                .willReturn(dto);
 
         // when
         ResultActions actions = mockMvc.perform(get("/coordis/lowest-category")
@@ -54,10 +57,11 @@ class CoordiControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].brand").value("A"))
-                .andExpect(jsonPath("$.[0].price").value(20_000))
-                .andExpect(jsonPath("$.[1].category").value("바지"))
-                .andExpect(jsonPath("$.[1].price").value(10_000));
+                .andExpect(jsonPath("$.총액").value(30_000))
+                .andExpect(jsonPath("$.상품.[0].brand").value("A"))
+                .andExpect(jsonPath("$.상품.[0].price").value(20_000))
+                .andExpect(jsonPath("$.상품.[1].category").value("바지"))
+                .andExpect(jsonPath("$.상품.[1].price").value(10_000));
     }
 
     @Test

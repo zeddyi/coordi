@@ -96,11 +96,12 @@ class CoordiServiceTest {
                 .willReturn(Optional.of(coordiAccessory));
 
         // when
-        List<Coordi> coordis = coordiService.getLowestEachCategories();
+        CoordiDto.LowestCategoryDto dto = coordiService.getLowestEachCategories();
 
         // then
-        assertThat(coordis.size()).isEqualTo(8);
-        Coordi coordi = coordis.get(6);
+        assertThat(dto.getTotalPrice()).isEqualTo(60_000);
+        assertThat(dto.getProducts().size()).isEqualTo(8);
+        Coordi coordi = dto.getProducts().get(6);
         assertThat(coordi.getBrand()).isEqualTo("G");
     }
 
