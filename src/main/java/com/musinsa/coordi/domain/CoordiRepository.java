@@ -25,5 +25,9 @@ public interface CoordiRepository extends JpaRepository<Coordi, Long> {
 
     boolean existsByBrand(String brand);
 
+    List<Coordi> findAllByBrandAndCategoryIn(String brand, List<Category> categories);
+
     void deleteAllByBrand(String brand);
+
+
 }

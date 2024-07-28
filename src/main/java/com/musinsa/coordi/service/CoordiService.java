@@ -15,7 +15,9 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -149,8 +151,15 @@ public class CoordiService {
             throw new AlreadyExistException("수정할 브랜드가 없음: " + request.getBrand());
         }
 
-        List<Coordi> coordis = convertDtoToEntity(request);
-        coordiRepository.saveAll(coordis);
+        List<Coordi> newCoordis = convertDtoToEntity(request);
+        List<Category> categories = newCoordis.stream()
+                .map(Coordi::getCategory)
+                .toList();
+        List<Coordi> savedCoordis = coordiRepository.findAllByBrandAndCategoryIn(request.getBrand(), categories);
+        Map<Category, Integer> priceMap = newCoordis.stream().collect(Collectors.toMap(Coordi::getCategory, Coordi::getPrice));
+        for (Coordi coordi : savedCoordis) {
+            coordi.setPrice(priceMap.get(coordi.getCategory()));
+        }
     }
 
     private List<Coordi> convertDtoToEntity(CoordiDto.RequestDto request) {
